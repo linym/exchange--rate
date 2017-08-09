@@ -20,8 +20,8 @@ import (
 
 	"github.com/line/line-bot-sdk-go/linebot"
 
-        _ "github.com/go-sql-driver/mysql"
-        "database/sql"
+   //     _ "github.com/go-sql-driver/mysql"
+    //    "database/sql"
 
 )
 const (
