@@ -53,13 +53,13 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 	rows, err := db.Query("SELECT * FROM linebot")
         checkErr(err)
             var uid int
-            var username string*/
+            var username string
 
         for rows.Next() {
             err = rows.Scan(&uid, &username)
             checkErr(err)
         }
-
+*/
 	events, err := bot.ParseRequest(r)
 
 	if err != nil {
