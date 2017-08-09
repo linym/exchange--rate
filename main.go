@@ -82,4 +82,9 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 }
+    func checkErr(err error) {
+        if err != nil {
+            panic(err)
+        }
+    }
 
