@@ -19,7 +19,20 @@ import (
 	"os"
 
 	"github.com/line/line-bot-sdk-go/linebot"
+
+        _ "github.com/go-sql-driver/mysql"
+        "database/sql"
+        "fmt"
+
 )
+const (
+    DB_HOST = "tcp(dbhome.cs.nctu.edu.tw)"
+    DB_NAME = "linym_cs"
+    DB_USER = "linym_cs"
+    DB_PASS = "xinyi601"
+)
+
+
 
 var bot *linebot.Client
 
@@ -34,6 +47,20 @@ func main() {
 }
 
 func callbackHandler(w http.ResponseWriter, r *http.Request) {
+
+	dsn := DB_USER + ":" + DB_PASS + "@" + DB_HOST + "/" + DB_NAME + "?charset=utf8"
+	db, err := sql.Open("mysql", dsn)
+        checkErr(err)
+	rows, err := db.Query("SELECT * FROM linebot")
+        checkErr(err)
+            var uid int
+            var username string
+
+        for rows.Next() {
+            err = rows.Scan(&uid, &username)
+            checkErr(err)
+        }
+
 	events, err := bot.ParseRequest(r)
 
 	if err != nil {
@@ -49,10 +76,11 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 		if event.Type == linebot.EventTypeMessage {
 			switch message := event.Message.(type) {
 			case *linebot.TextMessage:
-				if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(message.ID+":"+message.Text+" OK!!")).Do(); err != nil {
+				if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(message.ID+":"+message.Text+" OK!!"+username)).Do(); err != nil {
 					log.Print(err)
 				}
 			}
 		}
 	}
 }
+
