@@ -47,13 +47,13 @@ func main() {
 
 func callbackHandler(w http.ResponseWriter, r *http.Request) {
 
-	dsn := DB_USER + ":" + DB_PASS + "@" + DB_HOST + "/" + DB_NAME + "?charset=utf8"
+	/*dsn := DB_USER + ":" + DB_PASS + "@" + DB_HOST + "/" + DB_NAME + "?charset=utf8"
 	db, err := sql.Open("mysql", dsn)
         checkErr(err)
 	rows, err := db.Query("SELECT * FROM linebot")
         checkErr(err)
             var uid int
-            var username string
+            var username string*/
 
         for rows.Next() {
             err = rows.Scan(&uid, &username)
@@ -75,7 +75,7 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 		if event.Type == linebot.EventTypeMessage {
 			switch message := event.Message.(type) {
 			case *linebot.TextMessage:
-				if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(message.ID+":"+message.Text+" OK!!"+username)).Do(); err != nil {
+				if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(message.ID+":"+message.Text+" OK!!")).Do(); err != nil {
 					log.Print(err)
 				}
 			}
