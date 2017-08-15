@@ -25,10 +25,10 @@ import (
 
 )
 const (
-    DB_HOST = "dbhome.cs.nctu.edu.tw"
-    DB_NAME = "linym_cs"
-    DB_USER = "linym_cs"
-    DB_PASS = "xinyi601"
+    DB_HOST = "140.113.216.53"
+    DB_NAME = "linebot"
+    DB_USER = "linebot"
+    DB_PASS = "FenUMYemIOnznM8r"
 )
 
 
@@ -50,7 +50,7 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 	dsn := DB_USER + ":" + DB_PASS + "@" + DB_HOST + "/" + DB_NAME + "?charset=utf8"
 	db, err := sql.Open("mysql", dsn)
         checkErr(err)
-	rows, err := db.Query("SELECT * FROM `linbot`")
+	rows, err := db.Query("SELECT * FROM `users`")
         checkErr(err)
             var uid int
             var username string
